@@ -11,7 +11,7 @@ import scala.collection.immutable.TreeMap
  * @author Christopher Currie <ccurrie@impresys.com>
  */
 @RunWith(classOf[JUnitRunner])
-class SortedMapDeserializerTest extends DeserializerTest with FlatSpec with ShouldMatchers {
+class SortedMapDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
 
   lazy val module = new SortedMapDeserializerModule {}
 

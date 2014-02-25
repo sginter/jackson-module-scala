@@ -12,7 +12,7 @@ import scala.collection.{mutable, immutable, Iterator}
  * Undocumented class.
  */
 @RunWith(classOf[JUnitRunner])
-class IterableSerializerTest extends SerializerTest with FlatSpec with ShouldMatchers {
+class IterableSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
 
   lazy val module = new JacksonModule with IterableSerializerModule
 

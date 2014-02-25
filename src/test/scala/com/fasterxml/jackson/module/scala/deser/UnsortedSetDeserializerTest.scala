@@ -7,7 +7,7 @@ import org.scalatest.matchers.ShouldMatchers
 import scala.collection.{immutable, mutable}
 
 @RunWith(classOf[JUnitRunner])
-class UnsortedSetDeserializerTest extends DeserializerTest with FlatSpec with ShouldMatchers {
+class UnsortedSetDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
 
   lazy val module = new UnsortedSetDeserializerModule {}
 

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.module.scala.{DefaultScalaModule, JacksonModule}
  * Undocumented class.
  */
 @RunWith(classOf[JUnitRunner])
-class OptionSerializerTest extends SerializerTest with FlatSpec with ShouldMatchers {
+class OptionSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
 
   lazy val module = DefaultScalaModule
 

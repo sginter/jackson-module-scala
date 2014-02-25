@@ -9,7 +9,7 @@ import scala.collection._
 import immutable.ListMap
 
 @RunWith(classOf[JUnitRunner])
-class MapSerializerTest extends SerializerTest with FlatSpec with ShouldMatchers {
+class MapSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
 
   lazy val module = new MapSerializerModule {}
 

@@ -11,7 +11,7 @@ import scala.collection.mutable
  * @author Christopher Currie <ccurrie@impresys.com>
  */
 @RunWith(classOf[JUnitRunner])
-class UnsortedMapDeserializerTest extends DeserializerTest with FlatSpec with ShouldMatchers {
+class UnsortedMapDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
 
   lazy val module = new UnsortedMapDeserializerModule {}
 

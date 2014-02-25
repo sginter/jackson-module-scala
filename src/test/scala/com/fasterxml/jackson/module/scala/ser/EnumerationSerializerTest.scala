@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import com.fasterxml.jackson.module.scala.Weekday
 
 @RunWith(classOf[JUnitRunner])
-class EnumerationSerializerTest extends SerializerTest with FlatSpec with ShouldMatchers {
+class EnumerationSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
 
   lazy val module = new EnumerationSerializerModule {}
 

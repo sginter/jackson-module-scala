@@ -9,7 +9,7 @@ import org.scalatest.junit.JUnitRunner
  * @author Christopher Currie <ccurrie@impresys.com>
  */
 @RunWith(classOf[JUnitRunner])
-class TupleDeserializerTest extends DeserializerTest with FlatSpec with ShouldMatchers {
+class TupleDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
 
   lazy val module = new TupleDeserializerModule {}
 

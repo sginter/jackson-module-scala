@@ -20,7 +20,7 @@ case class CaseClassJacksonAnnotationTest(@JsonProperty("foo") oof:String, bar: 
 case class GenericCaseClassTest[T](data: T)
 
 @RunWith(classOf[JUnitRunner])
-class CaseClassDeserializerTest extends DeserializerTest with FlatSpec with ShouldMatchers {
+class CaseClassDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
 
   def module = new JacksonModule with CaseClassDeserializerModule
 

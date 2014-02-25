@@ -36,7 +36,7 @@ case class CaseClassWithCompanion(intValue: Int)
 case class CaseClassJacksonIgnorePropertyTest(ignore:String, test:String)
 
 @RunWith(classOf[JUnitRunner])
-class CaseClassSerializerTest extends SerializerTest with FlatSpec with ShouldMatchers {
+class CaseClassSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
 
   def module = new JacksonModule with CaseClassSerializerModule {}
 

@@ -14,7 +14,7 @@ class EnumContainer {
 }
 
 @RunWith(classOf[JUnitRunner])
-class EnumerationDeserializerTest extends DeserializerTest with FlatSpec with ShouldMatchers {
+class EnumerationDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
 
   lazy val module = new EnumerationDeserializerModule {}
 

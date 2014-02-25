@@ -4,10 +4,10 @@ import collection.JavaConverters._
 import com.fasterxml.jackson.module.scala.JacksonModule
 import org.codehaus.jackson.map.SerializationConfig
 import org.codehaus.jackson.map.ser.{BeanSerializerModifier, BeanPropertyWriter}
-import org.scalastuff.scalabeans.ConstructorParameter
 import org.codehaus.jackson.map.introspect.{JacksonAnnotationIntrospector, AnnotatedMethod, BasicBeanDescription}
-import java.util.{ArrayList, List => juList}
+import java.util.{List => juList}
 import com.fasterxml.jackson.module.scala.util.ScalaBeansUtil
+import java.util
 
 private object CaseClassBeanSerializerModifier extends BeanSerializerModifier {
   private val PRODUCT = classOf[Product]
@@ -23,15 +23,15 @@ private object CaseClassBeanSerializerModifier extends BeanSerializerModifier {
       // to see if it's a field or a method, but ScalaBeans doesn't expose that as yet.
       // I'm not sure if it truly matters as Scala generates method accessors for fields.
       // This is also realy inefficient, as we're doing a find on each iteration of the loop.
-      method <- Option(beanDesc.findMethod(prop.name, Array()))
+      method <- Option(beanDesc.findMethod(prop/*.name*/, Array()))
     } yield prop match {
-      case cp: ConstructorParameter =>
-        val param = beanDesc.getConstructors.get(0).getParameter(cp.index)
-        asWriter(config, beanDesc, method, Option(jacksonIntrospector.findPropertyNameForParam(param)))
+//      case cp: ConstructorParameter =>
+//        val param = beanDesc.getConstructors.get(0).getParameter(cp.index)
+//        asWriter(config, beanDesc, method, Option(jacksonIntrospector.findPropertyNameForParam(param)))
       case _ => asWriter(config, beanDesc, method)
     }
 
-    if (list.isEmpty) beanProperties else new ArrayList[BeanPropertyWriter](list.toList.asJava)
+    if (list.isEmpty) beanProperties else new util.ArrayList[BeanPropertyWriter](list.toList.asJava)
   }
 
   private def asWriter(config: SerializationConfig, beanDesc: BasicBeanDescription, member: AnnotatedMethod, primaryName: Option[String] = None) = {
