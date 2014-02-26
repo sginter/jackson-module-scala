@@ -43,8 +43,10 @@ object ScalaBeansUtil {
 
     constructorParameters ++ getType(cls).declarations.collect {
         case m: MethodSymbol if m.isGetter || m.isSetter =>
-          val field = m.name.decoded
-          val fromAnnotation = ctorParamAnnotations.get(field).orElse(getJsonPropertyValue(m.accessed.annotations))
+          val field = m.accessed.name.decoded.trim //workaround for SI-8137/SI-5736
+          val fromAnnotation = getJsonPropertyValue(m.annotations)
+            .orElse(getJsonPropertyValue(m.accessed.annotations))
+            .orElse(ctorParamAnnotations.get(field))
           val name = fromAnnotation.getOrElse(field)
           if (m.isSetter) FieldSetter(field, name) else FieldGetter(field, name)
     }
