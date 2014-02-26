@@ -51,8 +51,4 @@ object ScalaBeansUtil {
           if (m.isSetter) FieldSetter(field, name) else FieldGetter(field, name)
     }
   }
-
-  def deserializablePropertyNames(cls: Class[_]): Seq[String] = {
-    Seq()
-  }
 }
