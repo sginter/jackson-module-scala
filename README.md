@@ -51,3 +51,9 @@ Check out [Wiki].
 [Java Bean]: http://www.oracle.com/technetwork/java/javase/documentation/spec-136004.html
 [Scala]: http://www.scala-lang.org/
 [Wiki]: https://github.com/FasterXML/jackson-module-scala/wiki
+
+# The 1.9_2.10 version
+
+This version did not undergo extensive testing - please use with caution.
+
+Also, please don't blame the original developers for any bugs introduced.
