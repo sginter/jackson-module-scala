@@ -2,7 +2,7 @@ package com.fasterxml.jackson.module.scala.deser
 
 import com.fasterxml.jackson.module.scala.JacksonModule
 import org.codehaus.jackson.map.introspect.{AnnotatedField, AnnotatedConstructor, AnnotatedParameter, NopAnnotationIntrospector}
-import com.fasterxml.jackson.module.scala.util.ScalaBeansUtil
+import com.fasterxml.jackson.module.scala.util.{ConstructorParameter, FieldSetter, ScalaBeansUtil}
 
 private object CaseClassAnnotationIntrospector extends NopAnnotationIntrospector {
   lazy val PRODUCT = classOf[Product]
@@ -21,12 +21,12 @@ private object CaseClassAnnotationIntrospector extends NopAnnotationIntrospector
     val cls = af.getDeclaringClass
     if (!maybeIsCaseClass(cls)) null
     else {
-      val properties = ScalaBeansUtil.deserializablePropertyNames(cls)
+      val properties = ScalaBeansUtil.propertiesOf(cls)
 
       properties.find {
-        case dpName: String => af.getName.equals(dpName)
+        case dp: FieldSetter => af.getName.equals(dp.name)
         case _ => false
-      } getOrElse null
+      } map (_.name) getOrElse null
     }
   }
 
@@ -48,7 +48,7 @@ private object CaseClassAnnotationIntrospector extends NopAnnotationIntrospector
       val properties = ScalaBeansUtil.propertiesOf(cls)
 
       properties.find {
-//        case cp: ConstructorParameter => cp.index == param.getIndex
+        case cp: ConstructorParameter => cp.index == param.getIndex
         case _ => false
       }.map(_.name) getOrElse null
     }

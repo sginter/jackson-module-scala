@@ -3,9 +3,9 @@ import scala.reflect.runtime.universe._
 import scala.reflect.api.JavaUniverse
 import org.codehaus.jackson.annotate.JsonProperty
 
-trait Property { val name: String}
+trait Property { val name: String; val primaryName: String }
 
-case class ConstructorParameter(index: Int, name: String) extends Property
+case class ConstructorParameter(name: String, primaryName: String, index: Int) extends Property
 case class FieldGetter(name: String, primaryName: String) extends Property
 case class FieldSetter(name: String, primaryName: String) extends Property
 
@@ -31,18 +31,23 @@ object ScalaBeansUtil {
   def propertiesOf(cls: Class[_]): Seq[Property] = {
 
     val constructor = getType(cls).declaration(nme.CONSTRUCTOR)
-    val ctorParamAnnotations = (for {
-      (paramName, annotations) <- getParamsAnnotations(constructor.asMethod)
-      value <- getJsonPropertyValue(annotations)
-    } yield (paramName, value)).toMap
+    val ctorParamDecls = for {
+      ((paramName, annotations), index) <- getParamsAnnotations(constructor.asMethod).zipWithIndex
+      annotationValue = getJsonPropertyValue(annotations)
+    } yield (ConstructorParameter(paramName, annotationValue.getOrElse(paramName), index), (paramName, annotationValue))
 
-    getType(cls).declarations.collect {
-        case m: MethodSymbol if m.isGetter || m.isSetter=>
+    val (constructorParameters, annotations) = ctorParamDecls.unzip
+    val ctorParamAnnotations = Map() ++ (for {
+      (paramName, Some(annotationValue)) <- annotations
+    } yield (paramName, annotationValue))
+
+    constructorParameters ++ getType(cls).declarations.collect {
+        case m: MethodSymbol if m.isGetter || m.isSetter =>
           val field = m.name.decoded
           val fromAnnotation = ctorParamAnnotations.get(field).orElse(getJsonPropertyValue(m.accessed.annotations))
           val name = fromAnnotation.getOrElse(field)
           if (m.isSetter) FieldSetter(field, name) else FieldGetter(field, name)
-    }.toSeq
+    }
   }
 
   def deserializablePropertyNames(cls: Class[_]): Seq[String] = {

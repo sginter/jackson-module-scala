@@ -16,15 +16,14 @@ private object CaseClassBeanSerializerModifier extends BeanSerializerModifier {
                                 beanProperties: juList[BeanPropertyWriter]): juList[BeanPropertyWriter] = {
     val list = for {
       cls <- Option(beanDesc.getBeanClass).toSeq if (PRODUCT.isAssignableFrom(cls))
-      prop <- ScalaBeansUtil.propertiesOf(cls)
+      FieldGetter(name, primaryName) <- ScalaBeansUtil.propertiesOf(cls)
       // Not completely happy with this test. I'd rather check the PropertyDescription
       // to see if it's a field or a method, but ScalaBeans doesn't expose that as yet.
       // I'm not sure if it truly matters as Scala generates method accessors for fields.
       // This is also realy inefficient, as we're doing a find on each iteration of the loop.
-      method <- Option(beanDesc.findMethod(prop.name, Array()))
-    } yield prop match {
-      case f: FieldGetter => asWriter(config, beanDesc, method, Option(f.primaryName))
-    }
+      method <- Option(beanDesc.findMethod(name, Array()))
+    } yield asWriter(config, beanDesc, method, Option(primaryName))
+
 
     if (list.isEmpty) beanProperties else new juArrayList[BeanPropertyWriter](list.toList.asJava)
   }
