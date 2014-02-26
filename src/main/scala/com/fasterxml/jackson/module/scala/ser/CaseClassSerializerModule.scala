@@ -4,14 +4,12 @@ import collection.JavaConverters._
 import com.fasterxml.jackson.module.scala.JacksonModule
 import org.codehaus.jackson.map.SerializationConfig
 import org.codehaus.jackson.map.ser.{BeanSerializerModifier, BeanPropertyWriter}
-import org.codehaus.jackson.map.introspect.{JacksonAnnotationIntrospector, AnnotatedMethod, BasicBeanDescription}
-import java.util.{List => juList}
-import com.fasterxml.jackson.module.scala.util.ScalaBeansUtil
-import java.util
+import org.codehaus.jackson.map.introspect.{AnnotatedMethod, BasicBeanDescription}
+import java.util.{ArrayList => juArrayList, List => juList}
+import com.fasterxml.jackson.module.scala.util.{FieldGetter, ScalaBeansUtil}
 
 private object CaseClassBeanSerializerModifier extends BeanSerializerModifier {
   private val PRODUCT = classOf[Product]
-  private val jacksonIntrospector = new JacksonAnnotationIntrospector()
 
   override def changeProperties(config: SerializationConfig,
                                 beanDesc: BasicBeanDescription,
@@ -23,15 +21,12 @@ private object CaseClassBeanSerializerModifier extends BeanSerializerModifier {
       // to see if it's a field or a method, but ScalaBeans doesn't expose that as yet.
       // I'm not sure if it truly matters as Scala generates method accessors for fields.
       // This is also realy inefficient, as we're doing a find on each iteration of the loop.
-      method <- Option(beanDesc.findMethod(prop/*.name*/, Array()))
+      method <- Option(beanDesc.findMethod(prop.name, Array()))
     } yield prop match {
-//      case cp: ConstructorParameter =>
-//        val param = beanDesc.getConstructors.get(0).getParameter(cp.index)
-//        asWriter(config, beanDesc, method, Option(jacksonIntrospector.findPropertyNameForParam(param)))
-      case _ => asWriter(config, beanDesc, method)
+      case f: FieldGetter => asWriter(config, beanDesc, method, Option(f.primaryName))
     }
 
-    if (list.isEmpty) beanProperties else new util.ArrayList[BeanPropertyWriter](list.toList.asJava)
+    if (list.isEmpty) beanProperties else new juArrayList[BeanPropertyWriter](list.toList.asJava)
   }
 
   private def asWriter(config: SerializationConfig, beanDesc: BasicBeanDescription, member: AnnotatedMethod, primaryName: Option[String] = None) = {

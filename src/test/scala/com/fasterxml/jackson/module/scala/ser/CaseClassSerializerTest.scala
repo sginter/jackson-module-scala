@@ -19,6 +19,16 @@ case class CaseClassVarTest() {
   var strVar: String = "foo"
 }
 
+case class CaseClassValJsonPropertyTest() {
+  val intVal: Int = 1
+  @JsonProperty("explicitName") val strVal: String = "foo"
+}
+
+case class CaseClassVarJsonPropertyTest() {
+  var intVar: Int = 1
+  @JsonProperty("explicitName")  var strVar: String = "foo"
+}
+
 case class CaseClassMixedTest(intValue: Int) {
   val strVal: String = "foo"
 }
@@ -54,10 +64,24 @@ class CaseClassSerializerTest extends FlatSpec with SerializerTest with ShouldMa
     )
   }
 
+  it should "serialize a class class with val members honoring Jackson annotations" in {
+    serialize(CaseClassValJsonPropertyTest()) should (
+      equal ("""{"intVal":1,"explicitName":"foo"}""") or
+      equal ("""{"explicitName":"foo","intVal":1}""")
+    )
+  }
+
   it should "serialize a class class with var members" in {
     serialize(CaseClassVarTest()) should (
       equal ("""{"intVar":1,"strVar":"foo"}""") or
       equal ("""{"strVar":"foo","intVar":1}""")
+    )
+  }
+
+  it should "serialize a class class with var members honoring Jackson annotations" in {
+    serialize(CaseClassVarJsonPropertyTest()) should (
+      equal ("""{"intVar":1,"explicitName":"foo"}""") or
+      equal ("""{"explicitName":"foo","intVar":1}""")
     )
   }
 

@@ -50,7 +50,7 @@ private object CaseClassAnnotationIntrospector extends NopAnnotationIntrospector
       properties.find {
 //        case cp: ConstructorParameter => cp.index == param.getIndex
         case _ => false
-      }/*.map(_.name)*/ getOrElse null
+      }.map(_.name) getOrElse null
     }
   }
 
