@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.sonatype.oss</groupId>
@@ -6,9 +7,9 @@
     <version>5</version>
   </parent>
   <groupId>com.fasterxml</groupId>
-  <artifactId>jackson-module-scala</artifactId>
+  <artifactId>jackson-module-scala-2.10</artifactId>
   <name>Jackson-module-Scala</name>
-  <version>1.9.3_2.10-SNAPSHOT</version>
+  <version>1.9.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>Add-on module for Jackson (http://jackson.codehaus.org) to support
     Scala (http://www.scala-lang.org/) data types.
@@ -27,9 +28,9 @@
     </developer>
   </developers>
   <contributors>
-      <contributor>
-          <name>Slawomir Ginter</name>
-      </contributor>
+    <contributor>
+      <name>Slawomir Ginter</name>
+    </contributor>
   </contributors>
 
   <prerequisites>
