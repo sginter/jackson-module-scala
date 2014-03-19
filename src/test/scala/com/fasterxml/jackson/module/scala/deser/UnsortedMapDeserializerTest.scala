@@ -2,8 +2,7 @@ package com.fasterxml.jackson.module.scala.deser
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import scala.collection.immutable.HashMap
 import scala.collection.mutable
 
@@ -11,7 +10,7 @@ import scala.collection.mutable
  * @author Christopher Currie <ccurrie@impresys.com>
  */
 @RunWith(classOf[JUnitRunner])
-class UnsortedMapDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class UnsortedMapDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
 
   lazy val module = new UnsortedMapDeserializerModule {}
 

@@ -1,7 +1,6 @@
 package com.fasterxml.jackson.module.scala.ser
 
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.fasterxml.jackson.module.scala.JacksonModule
@@ -12,7 +11,7 @@ import scala.collection.{mutable, immutable, Iterator}
  * Undocumented class.
  */
 @RunWith(classOf[JUnitRunner])
-class IterableSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
+class IterableSerializerTest extends FlatSpec with SerializerTest with Matchers {
 
   lazy val module = new JacksonModule with IterableSerializerModule
 

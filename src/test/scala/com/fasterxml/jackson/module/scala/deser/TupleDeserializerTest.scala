@@ -1,7 +1,6 @@
 package com.fasterxml.jackson.module.scala.deser
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
+import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -9,7 +8,7 @@ import org.scalatest.junit.JUnitRunner
  * @author Christopher Currie <ccurrie@impresys.com>
  */
 @RunWith(classOf[JUnitRunner])
-class TupleDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class TupleDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
 
   lazy val module = new TupleDeserializerModule {}
 

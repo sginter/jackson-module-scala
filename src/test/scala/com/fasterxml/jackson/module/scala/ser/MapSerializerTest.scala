@@ -1,15 +1,14 @@
 package com.fasterxml.jackson.module.scala.ser
 
 import org.junit.runner.RunWith
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
+import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 
 import scala.collection._
 import immutable.ListMap
 
 @RunWith(classOf[JUnitRunner])
-class MapSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
+class MapSerializerTest extends FlatSpec with SerializerTest with Matchers {
 
   lazy val module = new MapSerializerModule {}
 

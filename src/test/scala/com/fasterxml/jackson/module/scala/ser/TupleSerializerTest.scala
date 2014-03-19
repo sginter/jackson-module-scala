@@ -1,13 +1,12 @@
 package com.fasterxml.jackson.module.scala.ser
 
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.fasterxml.jackson.module.scala.JacksonModule
 
 @RunWith(classOf[JUnitRunner])
-class TupleSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
+class TupleSerializerTest extends FlatSpec with SerializerTest with Matchers {
   lazy val module = new JacksonModule with TupleSerializerModule
 
   "An ObjectMapper" should "serialize a Tuple2" in {

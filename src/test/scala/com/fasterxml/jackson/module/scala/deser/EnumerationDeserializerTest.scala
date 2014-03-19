@@ -1,7 +1,6 @@
 package com.fasterxml.jackson.module.scala.deser
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
+import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import scala.reflect.BeanProperty
@@ -14,7 +13,7 @@ class EnumContainer {
 }
 
 @RunWith(classOf[JUnitRunner])
-class EnumerationDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class EnumerationDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
 
   lazy val module = new EnumerationDeserializerModule {}
 

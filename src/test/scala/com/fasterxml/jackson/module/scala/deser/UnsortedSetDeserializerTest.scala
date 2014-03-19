@@ -2,12 +2,11 @@ package com.fasterxml.jackson.module.scala.deser
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import scala.collection.{immutable, mutable}
 
 @RunWith(classOf[JUnitRunner])
-class UnsortedSetDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class UnsortedSetDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
 
   lazy val module = new UnsortedSetDeserializerModule {}
 

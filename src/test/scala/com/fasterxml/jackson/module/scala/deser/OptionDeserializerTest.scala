@@ -1,7 +1,6 @@
 package com.fasterxml.jackson.module.scala.deser
 
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
@@ -9,7 +8,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 case class UnavailableField(foo: Option[String])
 
 @RunWith(classOf[JUnitRunner])
-class OptionDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class OptionDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
   lazy val module = DefaultScalaModule
 
   "An ObjectMapper with OptionDeserializer" should "deserialize an Option[Int]" in {

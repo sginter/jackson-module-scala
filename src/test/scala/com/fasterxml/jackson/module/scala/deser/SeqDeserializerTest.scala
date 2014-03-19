@@ -1,15 +1,14 @@
 package com.fasterxml.jackson.module.scala.deser
 
 import org.junit.runner.RunWith
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 import scala.collection.{mutable, LinearSeq}
 import collection.immutable.Queue
 import com.fasterxml.jackson.module.scala.JacksonModule
 
 @RunWith(classOf[JUnitRunner])
-class SeqDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class SeqDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
 
   lazy val module = new JacksonModule with SeqDeserializerModule
 

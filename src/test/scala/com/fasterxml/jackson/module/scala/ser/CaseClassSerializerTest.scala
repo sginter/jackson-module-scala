@@ -2,8 +2,7 @@ package com.fasterxml.jackson.module.scala.ser
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import com.fasterxml.jackson.module.scala.JacksonModule
 import org.codehaus.jackson.annotate.{JsonIgnoreProperties, JsonProperty}
 
@@ -46,7 +45,7 @@ case class CaseClassWithCompanion(intValue: Int)
 case class CaseClassJacksonIgnorePropertyTest(ignore:String, test:String)
 
 @RunWith(classOf[JUnitRunner])
-class CaseClassSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
+class CaseClassSerializerTest extends FlatSpec with SerializerTest with Matchers {
 
   def module = new JacksonModule with CaseClassSerializerModule {}
 

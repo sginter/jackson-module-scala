@@ -1,13 +1,12 @@
 package com.fasterxml.jackson.module.scala.ser
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
+import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import com.fasterxml.jackson.module.scala.Weekday
 
 @RunWith(classOf[JUnitRunner])
-class EnumerationSerializerTest extends FlatSpec with SerializerTest with ShouldMatchers {
+class EnumerationSerializerTest extends FlatSpec with SerializerTest with Matchers {
 
   lazy val module = new EnumerationSerializerModule {}
 

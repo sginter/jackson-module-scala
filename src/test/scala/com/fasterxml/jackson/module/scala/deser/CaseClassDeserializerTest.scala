@@ -1,7 +1,6 @@
 package com.fasterxml.jackson.module.scala.deser
 
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FlatSpec}
 import com.fasterxml.jackson.module.scala.JacksonModule
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
@@ -20,7 +19,7 @@ case class CaseClassJacksonAnnotationTest(@JsonProperty("foo") oof:String, bar: 
 case class GenericCaseClassTest[T](data: T)
 
 @RunWith(classOf[JUnitRunner])
-class CaseClassDeserializerTest extends FlatSpec with DeserializerTest with ShouldMatchers {
+class CaseClassDeserializerTest extends FlatSpec with DeserializerTest with Matchers {
 
   def module = new JacksonModule with CaseClassDeserializerModule
 
