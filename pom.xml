@@ -38,7 +38,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <scala.version>2.10</scala.version>
-    <scala-lib.version>2.10.1</scala-lib.version>
+    <scala-lib.version>2.10.3</scala-lib.version>
   </properties>
 
   <!-- Licensing -->
@@ -67,6 +67,11 @@
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
+      <version>${scala-lib.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-reflect</artifactId>
       <version>${scala-lib.version}</version>
     </dependency>
 

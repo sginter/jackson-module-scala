@@ -10,14 +10,13 @@ case class FieldGetter(name: String, primaryName: String) extends Property
 case class FieldSetter(name: String, primaryName: String) extends Property
 
 object ScalaBeansUtil {
-  val rMirror = runtimeMirror(getClass.getClassLoader)
 
-  def getType[T](clazz: Class[T]) = rMirror.classSymbol(clazz).toType
-
-  val JsonPropertyType = typeOf[JsonProperty]
-  val JsonPropertyValueName = newTermName("value")
+  def getType[T](clazz: Class[T]) = runtimeMirror(clazz.getClassLoader).classSymbol(clazz).toType
 
   def getJsonPropertyValue (annotations: Seq[JavaUniverse#Annotation])  = {
+    val JsonPropertyType = getType(classOf[JsonProperty])
+    val JsonPropertyValueName = newTermName("value")
+
     val jsonPropertyValues = for {
       Annotation(JsonPropertyType, _, jsonPropertyParams) <- annotations
       (JsonPropertyValueName, LiteralArgument(Constant(value: String))) <- jsonPropertyParams
