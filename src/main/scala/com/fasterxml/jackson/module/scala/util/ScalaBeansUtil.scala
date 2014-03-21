@@ -11,14 +11,12 @@ case class FieldSetter(name: String, primaryName: String) extends Property
 
 object ScalaBeansUtil {
 
-  def getType[T](clazz: Class[T]) = runtimeMirror(clazz.getClassLoader).classSymbol(clazz).toType
-
   def getJsonPropertyValue (annotations: Seq[JavaUniverse#Annotation])  = {
-    val JsonPropertyType = getType(classOf[JsonProperty])
     val JsonPropertyValueName = newTermName("value")
 
     val jsonPropertyValues = for {
-      Annotation(JsonPropertyType, _, jsonPropertyParams) <- annotations
+      Annotation(jsonPropertyType, _, jsonPropertyParams) <- annotations
+      if jsonPropertyType.typeSymbol.fullName == classOf[JsonProperty].getName
       (JsonPropertyValueName, LiteralArgument(Constant(value: String))) <- jsonPropertyParams
     } yield value
 
@@ -28,19 +26,22 @@ object ScalaBeansUtil {
   def getParamsAnnotations(method: MethodSymbolApi) = method.paramss.flatten.map(p => (p.name.decoded, p.annotations))
 
   def propertiesOf(cls: Class[_]): Seq[Property] = {
+    val mirror = runtimeMirror(cls.getClassLoader)
+    mirror.synchronized {
+      val clsType = mirror.classSymbol(cls).toType
 
-    val constructor = getType(cls).declaration(nme.CONSTRUCTOR)
-    val ctorParamDecls = for {
-      ((paramName, annotations), index) <- getParamsAnnotations(constructor.asMethod).zipWithIndex
-      annotationValue = getJsonPropertyValue(annotations)
-    } yield (ConstructorParameter(paramName, annotationValue.getOrElse(paramName), index), (paramName, annotationValue))
+      val constructor = clsType.declaration(nme.CONSTRUCTOR)
+      val ctorParamDecls = for {
+        ((paramName, annotations), index) <- getParamsAnnotations(constructor.asMethod).zipWithIndex
+        annotationValue = getJsonPropertyValue(annotations)
+      } yield (ConstructorParameter(paramName, annotationValue.getOrElse(paramName), index), (paramName, annotationValue))
 
-    val (constructorParameters, annotations) = ctorParamDecls.unzip
-    val ctorParamAnnotations = Map() ++ (for {
-      (paramName, Some(annotationValue)) <- annotations
-    } yield (paramName, annotationValue))
+      val (constructorParameters, annotations) = ctorParamDecls.unzip
+      val ctorParamAnnotations = Map() ++ (for {
+        (paramName, Some(annotationValue)) <- annotations
+      } yield (paramName, annotationValue))
 
-    constructorParameters ++ getType(cls).declarations.collect {
+      constructorParameters ++ clsType.declarations.collect {
         case m: MethodSymbol if m.isGetter || m.isSetter =>
           val field = m.accessed.name.decoded.trim //workaround for SI-8137/SI-5736
           val fromAnnotation = getJsonPropertyValue(m.annotations)
@@ -48,6 +49,7 @@ object ScalaBeansUtil {
             .orElse(ctorParamAnnotations.get(field))
           val name = fromAnnotation.getOrElse(field)
           if (m.isSetter) FieldSetter(field, name) else FieldGetter(field, name)
+      }
     }
   }
 }
